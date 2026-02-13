@@ -132,9 +132,15 @@ button{
     <button id="noBtn" onmouseover="moveNo()">No 😜</button>
 </div>
 
-<audio id="bgMusic" autoplay loop>
+<audio id="bgMusic" loop>
     <source src="love.mpeg" type="audio/mpeg">
 </audio>
+
+<button onclick="playMusic()" 
+style="position:fixed; bottom:20px; right:20px; padding:10px 20px; border:none; border-radius:25px; background:#ff4d6d; color:white; cursor:pointer;">
+🎵 Play Music
+</button>
+
 
 <script>
 
@@ -175,9 +181,15 @@ function createHeart(){
     setTimeout(()=>{heart.remove()},6000);
 }
 setInterval(createHeart,300);
+function playMusic(){
+    const music = document.getElementById("bgMusic");
+    music.play();
+}
+
 
 </script>
 
 </body>
 </html>
+
 

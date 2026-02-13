@@ -36,6 +36,7 @@ body::before{
     33%{background-image:url('pic2.jpeg');}
     66%{background-image:url('pic3.jpeg');}
     100%{background-image:url('pic1.jpeg');}
+
 }
 
 /* Dark cinematic overlay */
@@ -131,35 +132,17 @@ button{
     <button id="noBtn" onmouseover="moveNo()">No 😜</button>
 </div>
 
-<audio id="bgMusic" autoplay loop muted>
+<audio id="bgMusic" loop>
     <source src="love.mpeg" type="audio/mpeg">
 </audio>
 
+<button onclick="playMusic()" 
+style="position:fixed; bottom:20px; right:20px; padding:10px 20px; border:none; border-radius:25px; background:#ff4d6d; color:white; cursor:pointer;">
+🎵 Play Music
+</button>
+
+
 <script>
-
-// Try autoplay on load, if blocked then play on first click anywhere
-window.addEventListener("DOMContentLoaded", function(){
-    const music = document.getElementById("bgMusic");
-
-    // Try autoplay (muted allowed in most browsers)
-    music.play();
-
-    // On first interaction anywhere, unmute smoothly
-    function enableSound(){
-        music.muted = false;
-        music.volume = 1;
-        music.play();
-        document.removeEventListener("click", enableSound);
-        document.removeEventListener("touchstart", enableSound);
-    }
-
-    document.addEventListener("click", enableSound);
-    document.addEventListener("touchstart", enableSound);
-});
-        });
-    }
-});
-
 
 /* Typing Effect */
 const text = "My Dearest Najmin Sultana Srithe 💕";
@@ -176,25 +159,10 @@ typingEffect();
 /* Move No Button */
 function moveNo(){
     const btn = document.getElementById("noBtn");
-    const maxX = window.innerWidth - btn.offsetWidth - 20;
-    const maxY = window.innerHeight - btn.offsetHeight - 20;
-
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
-
-    btn.style.position = "fixed";
-    btn.style.left = randomX + "px";
-    btn.style.top = randomY + "px";
-    btn.style.transition = "all 0.3s ease";
+    btn.style.position = "absolute";
+    btn.style.top = Math.random()*80 + "%";
+    btn.style.left = Math.random()*80 + "%";
 }
-
-// Smooth movement for both desktop and mobile
-const noBtn = document.getElementById("noBtn");
-noBtn.addEventListener("mouseenter", moveNo);
-noBtn.addEventListener("touchstart", function(e){
-    e.preventDefault();
-    moveNo();
-});
 
 /* Yes Celebration */
 function celebrate(){
@@ -213,8 +181,14 @@ function createHeart(){
     setTimeout(()=>{heart.remove()},6000);
 }
 setInterval(createHeart,300);
+function playMusic(){
+    const music = document.getElementById("bgMusic");
+    music.play();
+}
+
 
 </script>
 
 </body>
 </html>
+

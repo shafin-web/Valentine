@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine's Day ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    font-family:'Poppins',sans-serif;
+    color:white;
+}
+
+/* Background slideshow */
+body::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    animation:slideShow 9s infinite;
+    z-index:-2;
+}
+
+@keyframes slideShow{
+    0%{background-image:url('pic1.jpg');}
+    33%{background-image:url('pic2.jpg');}
+    66%{background-image:url('pic3.jpg');}
+    100%{background-image:url('pic1.jpg');}
+}
+
+/* Dark cinematic overlay */
+.overlay{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:linear-gradient(to bottom,rgba(0,0,0,0.6),rgba(0,0,0,0.8));
+    z-index:-1;
+}
+
+.content{
+    max-width:700px;
+    padding:30px;
+    animation:fadeIn 3s ease-in-out;
+}
+
+h1{
+    font-family:'Great Vibes',cursive;
+    font-size:60px;
+    color:#ff4d6d;
+}
+
+.typing{
+    font-size:28px;
+    margin:15px 0;
+    height:40px;
+}
+
+p{
+    font-size:18px;
+    line-height:1.7;
+}
+
+button{
+    margin-top:20px;
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+#yesBtn{
+    background:#ff4d6d;
+    color:white;
+}
+
+#yesBtn:hover{transform:scale(1.1)}
+
+#noBtn{
+    background:white;
+    color:#ff4d6d;
+    position:relative;
+}
+
+/* Floating hearts */
+.heart{
+    position:absolute;
+    bottom:-10px;
+    font-size:20px;
+    color:#ff4d6d;
+    animation:float 6s linear infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0) scale(1);opacity:1}
+    100%{transform:translateY(-100vh) scale(1.5);opacity:0}
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="content">
+    <h1>Happy Valentine's Day ❤️</h1>
+    <div class="typing" id="typing"></div>
+    <p>
+        You are the most beautiful chapter of my life. 💖 <br>
+        Every moment with you feels like a dream I never want to wake up from. <br>
+        I love you today, tomorrow, and forever.
+    </p>
+
+    <button id="yesBtn" onclick="celebrate()">Yes 💍</button>
+    <button id="noBtn" onmouseover="moveNo()">No 😜</button>
+</div>
+
+<audio id="bgMusic" autoplay loop>
+    <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* Typing Effect */
+const text = "My Dearest Najmin Sultana Srithe 💕";
+let i = 0;
+function typingEffect(){
+    if(i < text.length){
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typingEffect,100);
+    }
+}
+typingEffect();
+
+/* Move No Button */
+function moveNo(){
+    const btn = document.getElementById("noBtn");
+    btn.style.position = "absolute";
+    btn.style.top = Math.random()*80 + "%";
+    btn.style.left = Math.random()*80 + "%";
+}
+
+/* Yes Celebration */
+function celebrate(){
+    alert("Yayyyy!! I Love You So Much ❤️💍");
+}
+
+/* Floating Hearts Generator */
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.fontSize = Math.random()*20 + 10 + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{heart.remove()},6000);
+}
+setInterval(createHeart,300);
+
+</script>
+
+</body>
+</html>

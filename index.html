@@ -32,10 +32,10 @@ body::before{
 }
 
 @keyframes slideShow{
-    0%{background-image:url('pic1.jpg');}
-    33%{background-image:url('pic2.jpg');}
-    66%{background-image:url('pic3.jpg');}
-    100%{background-image:url('pic1.jpg');}
+    0%{background-image:url('pic1.jpeg');}
+    33%{background-image:url('pic2.jpeg');}
+    66%{background-image:url('pic3.jpeg');}
+    100%{background-image:url('pic1.jpeg');}
 }
 
 /* Dark cinematic overlay */
@@ -131,7 +131,7 @@ button{
     <button id="noBtn" onmouseover="moveNo()">No 😜</button>
 </div>
 
-<audio id="bgMusic" autoplay loop>
+<audio id="bgMusic" autoplay loop muted>
     <source src="love.mpeg" type="audio/mpeg">
 </audio>
 
@@ -140,20 +140,29 @@ button{
 // Try autoplay on load, if blocked then play on first click anywhere
 window.addEventListener("DOMContentLoaded", function(){
     const music = document.getElementById("bgMusic");
-    const playPromise = music.play();
 
-    if (playPromise !== undefined) {
-        playPromise.catch(() => {
-            document.body.addEventListener("click", function(){
-                music.play();
-            }, { once: true });
+    // Try autoplay (muted allowed in most browsers)
+    music.play();
+
+    // On first interaction anywhere, unmute smoothly
+    function enableSound(){
+        music.muted = false;
+        music.volume = 1;
+        music.play();
+        document.removeEventListener("click", enableSound);
+        document.removeEventListener("touchstart", enableSound);
+    }
+
+    document.addEventListener("click", enableSound);
+    document.addEventListener("touchstart", enableSound);
+});
         });
     }
 });
 
 
 /* Typing Effect */
-const text = "My Dearest [Her Name] 💕";
+const text = "My Dearest Najmin Sultana Srithe 💕";
 let i = 0;
 function typingEffect(){
     if(i < text.length){
@@ -167,10 +176,25 @@ typingEffect();
 /* Move No Button */
 function moveNo(){
     const btn = document.getElementById("noBtn");
-    btn.style.position = "absolute";
-    btn.style.top = Math.random()*80 + "%";
-    btn.style.left = Math.random()*80 + "%";
+    const maxX = window.innerWidth - btn.offsetWidth - 20;
+    const maxY = window.innerHeight - btn.offsetHeight - 20;
+
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+
+    btn.style.position = "fixed";
+    btn.style.left = randomX + "px";
+    btn.style.top = randomY + "px";
+    btn.style.transition = "all 0.3s ease";
 }
+
+// Smooth movement for both desktop and mobile
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", function(e){
+    e.preventDefault();
+    moveNo();
+});
 
 /* Yes Celebration */
 function celebrate(){
